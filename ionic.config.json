@@ -1,0 +1,7 @@
+{
+  "name": "gobus",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
