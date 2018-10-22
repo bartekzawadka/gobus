@@ -1,0 +1,34 @@
+<!--
+  Generated template for the ChooseBusStopNumberPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Choose bus stop number</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list radio-group [(ngModel)]="selectedNumber">
+    <ion-list-header>
+      CHOOSE BUS STOP NUMBER
+    </ion-list-header>
+    <ion-item *ngFor="let item of busNumbers">
+      <ion-label>{{item}}</ion-label>
+      <ion-radio [value]="item"></ion-radio>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons right>
+      <button ion-button [disabled]="!selectedNumber" (click)="saveBusSettings()">
+        Save
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
