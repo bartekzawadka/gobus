@@ -11,30 +11,42 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ConfigProvider } from '../providers/config/config';
 import { TimetableProvider } from '../providers/timetable/timetable';
 import { HttpClientModule} from "@angular/common/http";
+import { ErrorDialogProvider } from '../providers/error-dialog/error-dialog';
+import {SearchBusStopPage} from "../pages/search-bus-stop/search-bus-stop";
+import {ChooseBusStopNumberPage} from "../pages/choose-bus-stop-number/choose-bus-stop-number";
+import {IonicStorageModule} from "@ionic/storage";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    SearchBusStopPage,
+    ChooseBusStopNumberPage,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+      mode: 'ios'
+    }),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    SearchBusStopPage,
+    ChooseBusStopNumberPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ConfigProvider,
-    TimetableProvider
+    TimetableProvider,
+    ErrorDialogProvider
   ]
 })
 export class AppModule {}

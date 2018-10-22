@@ -32,6 +32,7 @@ export class ConfigProvider {
             settings.busStopId = value[0];
             settings.busStopNr = value[1];
           }
+          resolve(settings);
         }catch (e) {
           reject(e);
         }
