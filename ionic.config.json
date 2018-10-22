@@ -3,5 +3,11 @@
   "integrations": {
     "cordova": {}
   },
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "proxies": [
+    {
+      "path": "/apibase/",
+      "proxyUrl": "https://api.um.warszawa.pl/api/action/dbtimetable_get/"
+    }
+  ]
 }
