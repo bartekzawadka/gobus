@@ -13,22 +13,12 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list radio-group [(ngModel)]="selectedNumber">
+  <ion-list radio-group>
     <ion-list-header>
       CHOOSE BUS STOP NUMBER
     </ion-list-header>
-    <ion-item *ngFor="let item of busNumbers">
-      <ion-label>{{item}}</ion-label>
-      <ion-radio [value]="item"></ion-radio>
-    </ion-item>
+    <button ion-item *ngFor="let item of busNumbers" (click)="saveBusSettings(item)">
+      {{item}}
+    </button>
   </ion-list>
 </ion-content>
-<ion-footer>
-  <ion-toolbar>
-    <ion-buttons right>
-      <button ion-button [disabled]="!selectedNumber" (click)="saveBusSettings()">
-        Save
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>

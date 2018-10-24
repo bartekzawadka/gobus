@@ -24,7 +24,6 @@ export class SearchBusStopPage {
   private settings: Settings = new Settings();
   isSearchEnabled = false;
   busStops: Array<BusStop> = [];
-  selectedBusStop: BusStop;
   autocomplete = "on";
 
   constructor(
@@ -67,9 +66,10 @@ export class SearchBusStopPage {
     })
   }
 
-  chooseBusNumber(){
+  chooseBusNumber(item: BusStop){
     this.navCtrl.push(ChooseBusStopNumberPage, {
-      busId: this.selectedBusStop.id
+      busStopId: item.id,
+      busStopName: item.name
     });
   }
 }

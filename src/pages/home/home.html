@@ -3,10 +3,31 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Go-BUS</ion-title>
+    <ion-title>
+      <img src="assets/imgs/logo-gobus.png" width="118" height="43">
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-list>
+    <ion-list-header>
+      SCHEDULE FOR BUS STOP <i>{{busStop.name}}</i> ({{busStop.number}})
 
+      <span item-end>
+        {{actualTime.format("dddd, DD-MM-YYYY, HH:mm:ss")}}
+      </span>
+    </ion-list-header>
+
+    <ion-item *ngFor="let bus of busList">
+      <h1 ion-text item-start [color]="bus.isCommingSoon ? 'danger' : ''">
+        <ion-icon name="bus"></ion-icon>
+        {{bus.line}}
+      </h1>
+      <h2 margin-left="20px" ion-text [color]="bus.isCommingSoon ? 'danger' : ''">{{bus.remaining.humanize(true)}}</h2>
+      <p margin-left="20px">{{bus.time.format("HH:mm")}}</p>
+
+      <ion-note item-end><ion-icon name="arrow-forward"></ion-icon> {{bus.direction}}</ion-note>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -46,6 +46,7 @@ export class TimetableProvider {
         }
 
         if (item.direction && item.eta) {
+          item.line = line;
           schedules.push(item);
         }
       }

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {ConfigProvider} from "../../providers/config/config";
-import {HomePage} from "../home/home";
 
 /**
  * Generated class for the ChooseBusStopNumberPage page.
@@ -18,7 +17,7 @@ import {HomePage} from "../home/home";
 export class ChooseBusStopNumberPage {
 
   private readonly busStopId: number;
-  selectedNumber: string;
+  private readonly busStopName: string;
   busNumbers = [
     '01',
     '02'
@@ -28,13 +27,15 @@ export class ChooseBusStopNumberPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public configSrv: ConfigProvider) {
-    this.busStopId = this.navParams.get('busId');
+    this.busStopId = this.navParams.get('busStopId');
+    this.busStopName = this.navParams.get('busStopName');
   }
 
-  saveBusSettings(){
+  saveBusSettings(busNumber: string){
     this.configSrv.getSettings().then(settings =>{
       settings.busStopId = this.busStopId;
-      settings.busStopNr = this.selectedNumber;
+      settings.busStopNr = busNumber;
+      settings.busStopName = this.busStopName;
 
       this.configSrv.saveSettings(settings).then(()=>{
         this.navCtrl.popToRoot();
