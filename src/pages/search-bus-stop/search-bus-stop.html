@@ -22,22 +22,12 @@
     [autocomplete]="autocomplete"
     (ionChange)="search()" [disabled]="!isSearchEnabled"></ion-searchbar>
 
-  <ion-list radio-group [(ngModel)]="selectedBusStop" *ngIf="busStops && busStops.length > 0">
+  <ion-list *ngIf="busStops && busStops.length > 0">
     <ion-list-header>
       CHOOSE BUS STOP
     </ion-list-header>
-    <ion-item *ngFor="let item of busStops">
-      <ion-label>{{item.name}} ({{item.id}})</ion-label>
-      <ion-radio [value]="item" [checked]="item.id == settings.busStopId"></ion-radio>
-    </ion-item>
+    <button ion-item *ngFor="let item of busStops" (click)="chooseBusNumber(item)">
+      {{item.name}} ({{item.id}})
+    </button>
   </ion-list>
 </ion-content>
-<ion-footer>
-  <ion-toolbar>
-    <ion-buttons right>
-      <button ion-button [disabled]="!selectedBusStop || !selectedBusStop.id" (click)="chooseBusNumber()">
-        Next
-      </button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>

@@ -26,11 +26,13 @@ export class ConfigProvider {
       Promise.all([
         this.storage.get('busStopId'),
         this.storage.get('busStopNr'),
+        this.storage.get('busStopName'),
       ]).then(value => {
         try{
           if(value[0]) {
             settings.busStopId = value[0];
             settings.busStopNr = value[1];
+            settings.busStopName = value[2];
           }
           resolve(settings);
         }catch (e) {
@@ -45,6 +47,7 @@ export class ConfigProvider {
       Promise.all([
         this.storage.set('busStopId', settings.busStopId),
         this.storage.set('busStopNr', settings.busStopNr),
+        this.storage.set('busStopName', settings.busStopName),
       ]).then(resolve)
         .catch(reject);
     });

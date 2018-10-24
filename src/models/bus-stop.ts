@@ -1,16 +1,17 @@
+import {Settings} from "./settings";
+
 export class BusStop {
   name: string;
   id: number;
   number: string;
-  lines: Array<number> = [];
+  lines: Array<string> = [];
 
-  static getClone(busStop: BusStop) : BusStop{
-    let copy = new BusStop();
-    copy.lines = busStop.lines;
-    copy.number = busStop.number;
-    copy.id = busStop.id;
-    copy.name = busStop.name;
+  static fromSettings(settings: Settings){
+    let busStop = new BusStop();
+    busStop.number = settings.busStopNr;
+    busStop.name = settings.busStopName;
+    busStop.id = settings.busStopId;
 
-    return copy;
+    return busStop;
   }
 }
