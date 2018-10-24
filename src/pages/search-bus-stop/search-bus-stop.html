@@ -1,0 +1,33 @@
+<!--
+  Generated template for the SearchBusStopPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Search bus stop</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-searchbar
+    [(ngModel)]="busStopName"
+    [showCancelButton]="true"
+    [animated]="true"
+    [debounce]="500"
+    [autocomplete]="autocomplete"
+    (ionChange)="search()" [disabled]="!isSearchEnabled"></ion-searchbar>
+
+  <ion-list *ngIf="busStops && busStops.length > 0">
+    <ion-list-header>
+      CHOOSE BUS STOP
+    </ion-list-header>
+    <button ion-item *ngFor="let item of busStops" (click)="chooseBusNumber(item)">
+      {{item.name}} ({{item.id}})
+    </button>
+  </ion-list>
+</ion-content>
