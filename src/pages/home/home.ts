@@ -16,7 +16,6 @@ export class HomePage {
 
   private errorToast: Toast;
   private isErrorToastVisible = false;
-  cyclesCounter = 0;
   busStop = BusStop.fromSettings(new Settings());
   busList : Array<BusSchedule> = [];
   actualTime = moment();
@@ -67,7 +66,6 @@ export class HomePage {
   }
 
   private onPresentationTick(handler: number) {
-    this.cyclesCounter++;
     clearTimeout(handler);
 
     let promises: Array<Promise<any>> = [];

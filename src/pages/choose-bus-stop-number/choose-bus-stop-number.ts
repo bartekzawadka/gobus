@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import {ConfigProvider} from "../../providers/config/config";
 
 /**
@@ -9,7 +9,6 @@ import {ConfigProvider} from "../../providers/config/config";
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-choose-bus-stop-number',
   templateUrl: 'choose-bus-stop-number.html',
