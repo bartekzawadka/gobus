@@ -33,7 +33,3 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-
-# Envrionment Variables
-**/environment.*.ts
-!**/environment.model.ts
