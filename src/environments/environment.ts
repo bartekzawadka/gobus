@@ -1,6 +1,6 @@
 export let ENV = {
   "api": {
-    "endpoint": "@@API_ENDPOINT@@",
+    "endpoint": "http://localhost:8100/apibase/",
     "key": "@@API_KEY@@"
   },
   "dataRefreshInterval": 5000,
