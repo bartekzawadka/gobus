@@ -17,7 +17,7 @@ export class HomePage {
   private errorToast: Toast;
   private isErrorToastVisible = false;
   busStop = BusStop.fromSettings(new Settings());
-  busList : Array<BusSchedule> = [];
+  busList: Array<BusSchedule> = [];
   actualTime = moment();
 
   constructor(
@@ -35,8 +35,8 @@ export class HomePage {
   ionViewDidEnter() {
     this.configProvider.getSettings().then(settings => {
       let clean = false;
-      if(settings.busStopId !== this.busStop.id
-        || settings.busStopNr !== this.busStop.number){
+      if (settings.busStopId !== this.busStop.id
+        || settings.busStopNr !== this.busStop.number) {
         clean = true;
       }
 
@@ -47,53 +47,44 @@ export class HomePage {
   }
 
   private loadData(cleanExistingData = false) {
-    if(cleanExistingData) {
+    if (cleanExistingData) {
       this.busList = [];
     }
 
-    let me = this;
-
-    me.timetableProvider
+    this.timetableProvider
       .getBusLinesForBusStop(this.busStop)
       .then(result => {
-        me.busStop = result;
-        me.presentSchedule(me);
+        this.busStop = result;
+        this.presentSchedule();
       }).catch()
   }
 
-  private presentSchedule(ctrl: any) {
-    let handler = setTimeout(
+  private presentSchedule() {
+    setInterval(
       () => {
-        ctrl.onPresentationTick(handler, ctrl);
+        this.onPresentationTick();
       },
       ConfigProvider.getSysConfig().dataRefreshInterval);
   }
 
-  private onPresentationTick(handler: number, ctrl: any) {
-    clearTimeout(handler);
-
+  private onPresentationTick() {
     let promises: Array<Promise<any>> = [];
 
-    _.forEach(ctrl.busStop.lines, (item) => {
+    _.forEach(this.busStop.lines, (item) => {
       promises.push(
-        ctrl.timetableProvider.getBusSchedule(
-          ctrl.busStop.id,
-          ctrl.busStop.number,
+        this.timetableProvider.getBusSchedule(
+          this.busStop.id,
+          this.busStop.number,
           item));
     });
 
     Promise.all(promises)
       .then(results => {
-        ctrl.handleError().then(() => {
-          ctrl.handleResults(results);
-          ctrl.presentSchedule(ctrl);
+        this.handleError().then(() => {
+          this.handleResults(results);
         });
       })
-      .catch(e => {
-        ctrl.handleError(e)
-          .then(ctrl.presentSchedule)
-          .catch(ctrl.presentSchedule);
-      });
+      .catch(this.handleError);
   }
 
   private handleResults(data: any[]) {
@@ -112,7 +103,7 @@ export class HomePage {
         item.time = time;
         item.remaining = moment.duration(time.diff(currentTime));
         let minutes = item.remaining.asMinutes();
-        if(minutes <= 5){
+        if (minutes <= 5) {
           item.isCommingSoon = true;
         }
         smallerSchedule.push(item);
@@ -132,7 +123,14 @@ export class HomePage {
   private handleError(e?): Promise<any> {
     return new Promise((resolve, reject) => {
       if (e) {
-        this.errorToast.setMessage(e);
+        let message = e;
+        if (e.error) {
+          message = e.error;
+        } else if (e.statusText) {
+          message = e.statusText;
+        }
+
+        this.errorToast.setMessage(message);
         if (!this.isErrorToastVisible) {
           this.errorToast.present()
             .then(() => {
@@ -160,9 +158,9 @@ export class HomePage {
     });
   }
 
-  private runTimer(){
+  private runTimer() {
     let me = this;
-    setInterval(()=>{
+    setInterval(() => {
       me.actualTime = moment();
     }, 1000);
   }
