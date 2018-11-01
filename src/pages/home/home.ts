@@ -51,46 +51,48 @@ export class HomePage {
       this.busList = [];
     }
 
-    this.timetableProvider
+    let me = this;
+
+    me.timetableProvider
       .getBusLinesForBusStop(this.busStop)
       .then(result => {
-        this.busStop = result;
-        this.presentSchedule();
+        me.busStop = result;
+        me.presentSchedule(me);
       }).catch()
   }
 
-  private presentSchedule() {
+  private presentSchedule(ctrl: any) {
     let handler = setTimeout(
-      () => this.onPresentationTick(handler),
+      () => {
+        ctrl.onPresentationTick(handler, ctrl);
+      },
       ConfigProvider.getSysConfig().dataRefreshInterval);
   }
 
-  private onPresentationTick(handler: number) {
+  private onPresentationTick(handler: number, ctrl: any) {
     clearTimeout(handler);
 
     let promises: Array<Promise<any>> = [];
 
-    _.forEach(this.busStop.lines, (item) => {
+    _.forEach(ctrl.busStop.lines, (item) => {
       promises.push(
-        this.timetableProvider.getBusSchedule(
-          this.busStop.id,
-          this.busStop.number,
+        ctrl.timetableProvider.getBusSchedule(
+          ctrl.busStop.id,
+          ctrl.busStop.number,
           item));
     });
 
-    let me = this;
-
     Promise.all(promises)
       .then(results => {
-        me.handleError().then(() => {
-          me.handleResults(results);
-          me.presentSchedule();
+        ctrl.handleError().then(() => {
+          ctrl.handleResults(results);
+          ctrl.presentSchedule(ctrl);
         });
       })
       .catch(e => {
-        me.handleError(e)
-          .then(me.presentSchedule)
-          .catch(me.presentSchedule);
+        ctrl.handleError(e)
+          .then(ctrl.presentSchedule)
+          .catch(ctrl.presentSchedule);
       });
   }
 
@@ -159,8 +161,9 @@ export class HomePage {
   }
 
   private runTimer(){
+    let me = this;
     setInterval(()=>{
-      this.actualTime = moment();
+      me.actualTime = moment();
     }, 1000);
   }
 }
